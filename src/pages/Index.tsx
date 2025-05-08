@@ -5,6 +5,8 @@ import { ArrowRight, Check, Zap, Battery, Clock, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PageLayout from '@/components/layout/PageLayout';
+import ResponsiveImage from '@/components/shared/ResponsiveImage';
+import { useIsMobile, useIsTablet } from '@/hooks/use-mobile';
 
 const statsData = [
   { id: 1, label: 'Range Per Charge', value: '200', unit: 'KM' },
@@ -17,25 +19,25 @@ const featuresData = [
     id: 1,
     title: 'Fast Charging',
     description: 'Go from 0 to 80% in just 45 minutes with our quick charge technology.',
-    icon: <Zap className="h-8 w-8 text-electricLime" />
+    icon: <Zap className="h-6 w-6 md:h-8 md:w-8 text-electricLime" />
   },
   {
     id: 2,
     title: 'Extended Battery Life',
     description: 'Our batteries are designed to last 2000+ charging cycles, giving you years of reliable service.',
-    icon: <Battery className="h-8 w-8 text-electricLime" />
+    icon: <Battery className="h-6 w-6 md:h-8 md:w-8 text-electricLime" />
   },
   {
     id: 3,
     title: 'Low Running Cost',
     description: 'Save up to ₹400 per day compared to conventional fuel vehicles.',
-    icon: <Clock className="h-8 w-8 text-electricLime" />
+    icon: <Clock className="h-6 w-6 md:h-8 md:w-8 text-electricLime" />
   },
   {
     id: 4,
     title: 'Award Winning Design',
     description: 'Recognized for innovation and ergonomics with multiple industry awards.',
-    icon: <Award className="h-8 w-8 text-electricLime" />
+    icon: <Award className="h-6 w-6 md:h-8 md:w-8 text-electricLime" />
   }
 ];
 
@@ -99,10 +101,13 @@ const useCounterAnimation = (end: number, duration: number = 2000) => {
 };
 
 const Index = () => {
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
+
   return (
     <PageLayout>
       {/* Hero Section with Video Background */}
-      <section className="relative min-h-screen flex items-center text-white overflow-hidden">
+      <section className="relative min-h-[80vh] md:min-h-screen flex items-center text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <video 
             className="w-full h-full object-cover"
@@ -118,29 +123,29 @@ const Index = () => {
           <div className="absolute inset-0 bg-jetBlack opacity-60"></div>
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-3xl animate-fade-in">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               Electrifying India, 
               <span className="text-electricLime block mt-2">One Ride at a Time</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 opacity-90">
+            <p className="text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 opacity-90">
               Experience the future of transportation with our premium electric three-wheelers.
               Eco-friendly, cost-effective, and designed for the Indian roads.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 md:gap-4">
               <Button 
                 asChild
-                className="bg-electricLime text-jetBlack hover:bg-neonEmerald hover:text-white flex items-center gap-2 text-lg px-8 py-6"
+                className="bg-electricLime text-jetBlack hover:bg-neonEmerald hover:text-white flex items-center gap-2 text-base md:text-lg px-5 py-5 md:px-8 md:py-6"
               >
                 <Link to="/products">
-                  Explore Models <ArrowRight size={18} />
+                  Explore Models <ArrowRight size={isMobile ? 16 : 18} />
                 </Link>
               </Button>
               <Button 
                 asChild
                 variant="outline" 
-                className="border-white text-white hover:bg-white/10 flex items-center gap-2 text-lg px-8 py-6"
+                className="border-white text-white hover:bg-white/10 flex items-center gap-2 text-base md:text-lg px-5 py-5 md:px-8 md:py-6"
               >
                 <Link to="/contact">
                   Dealer Enquiry
@@ -152,21 +157,21 @@ const Index = () => {
       </section>
 
       {/* Stats Counter Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
             {statsData.map((stat) => {
               const { count, ref } = useCounterAnimation(parseInt(stat.value));
               return (
                 <div 
                   key={stat.id} 
                   ref={ref}
-                  className="p-8 rounded-lg hover-scale"
+                  className="p-4 md:p-8 rounded-lg hover-scale"
                 >
-                  <div className="text-5xl md:text-6xl font-sora font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-electricLime to-neonEmerald">
+                  <div className="text-4xl md:text-5xl lg:text-6xl font-sora font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-electricLime to-neonEmerald">
                     {count}{stat.unit}
                   </div>
-                  <p className="text-lg text-gray-600">{stat.label}</p>
+                  <p className="text-base md:text-lg text-gray-600">{stat.label}</p>
                 </div>
               );
             })}
@@ -175,39 +180,40 @@ const Index = () => {
       </section>
 
       {/* Product Preview Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Our Premium Electric Vehicles</h2>
-          <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      <section className="py-12 md:py-20 bg-gray-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-2 md:mb-4">Our Premium Electric Vehicles</h2>
+          <p className="text-lg md:text-xl text-gray-600 text-center mb-8 md:mb-12 max-w-3xl mx-auto">
             Designed for Indian roads and conditions, our vehicles offer the perfect blend of performance, comfort, and efficiency.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
             {productsData.map((product) => (
               <Card 
                 key={product.id} 
                 className="overflow-hidden border-0 shadow-lg hover-scale"
               >
-                <div className="relative h-64 overflow-hidden">
-                  <img 
+                <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                  <ResponsiveImage 
                     src={product.image} 
-                    alt={product.name} 
+                    alt={product.name}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                    <div className="p-6 text-white">
-                      <h3 className="text-2xl font-bold">{product.name}</h3>
+                    <div className="p-4 md:p-6 text-white">
+                      <h3 className="text-xl md:text-2xl font-bold">{product.name}</h3>
                     </div>
                   </div>
                 </div>
-                <CardContent className="p-6">
+                <CardContent className="p-4 md:p-6">
                   <p className="text-gray-600 mb-4">{product.description}</p>
-                  <div className="mb-6">
+                  <div className="mb-5 md:mb-6">
                     <h4 className="text-sm uppercase font-semibold text-gray-500 mb-2">Key Features</h4>
                     <ul className="space-y-2">
                       {product.features.map((feature, index) => (
-                        <li key={index} className="flex items-center gap-2 text-gray-700">
-                          <Check size={16} className="text-neonEmerald" />
+                        <li key={index} className="flex items-center gap-2 text-gray-700 text-sm md:text-base">
+                          <Check size={isMobile ? 14 : 16} className="text-neonEmerald" />
                           {feature}
                         </li>
                       ))}
@@ -229,23 +235,23 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Why Choose Us</h2>
-          <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-2 md:mb-4">Why Choose Us</h2>
+          <p className="text-lg md:text-xl text-gray-600 text-center mb-8 md:mb-12 max-w-3xl mx-auto">
             Our electric vehicles are packed with innovative features designed to make your ride smoother, safer, and more economical.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {featuresData.map((feature, index) => (
               <div 
                 key={feature.id}
-                className="p-6 rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-electricLime"
+                className="p-4 md:p-6 rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-electricLime"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
-                <div className="mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <div className="mb-3 md:mb-4">{feature.icon}</div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3">{feature.title}</h3>
+                <p className="text-gray-600 text-sm md:text-base">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -253,16 +259,16 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-jetBlack to-gray-900 text-white">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Make the Switch?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+      <section className="py-12 md:py-20 bg-gradient-to-r from-jetBlack to-gray-900 text-white">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">Ready to Make the Switch?</h2>
+          <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto">
             Join thousands of satisfied drivers who have already made the smart choice for their business and the environment.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
             <Button 
               asChild
-              className="bg-electricLime text-jetBlack hover:bg-neonEmerald hover:text-white text-lg px-8 py-6"
+              className="bg-electricLime text-jetBlack hover:bg-neonEmerald hover:text-white text-base md:text-lg px-5 py-5 md:px-8 md:py-6"
             >
               <Link to="/contact">
                 Book a Test Drive
@@ -271,7 +277,7 @@ const Index = () => {
             <Button 
               asChild
               variant="outline"
-              className="border-white text-white hover:bg-white/10 text-lg px-8 py-6"
+              className="border-white text-white hover:bg-white/10 text-base md:text-lg px-5 py-5 md:px-8 md:py-6"
             >
               <Link to="/service-centers">
                 Find Nearest Dealer

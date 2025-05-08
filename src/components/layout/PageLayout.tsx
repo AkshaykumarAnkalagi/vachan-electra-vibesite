@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import TestimonialBar from '../shared/TestimonialBar';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile, useIsTablet } from '@/hooks/use-mobile';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -12,6 +12,7 @@ interface PageLayoutProps {
 
 const PageLayout = ({ children, hideTestimonials = false }: PageLayoutProps) => {
   const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
   
   // Scroll to top on page change
   useEffect(() => {
@@ -21,7 +22,7 @@ const PageLayout = ({ children, hideTestimonials = false }: PageLayoutProps) => 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className={`flex-grow ${isMobile ? 'pt-14' : 'pt-16'}`}>
+      <main className={`flex-grow ${isMobile ? 'pt-16' : isTablet ? 'pt-16' : 'pt-20'}`}>
         {children}
       </main>
       {!hideTestimonials && <TestimonialBar />}
