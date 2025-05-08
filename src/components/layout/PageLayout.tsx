@@ -20,9 +20,9 @@ const PageLayout = ({ children, hideTestimonials = false }: PageLayoutProps) => 
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-hidden">
       <Navbar />
-      <main className={`flex-grow ${isMobile ? 'pt-16' : isTablet ? 'pt-16' : 'pt-20'}`}>
+      <main id="main-content" tabIndex={-1} className={`flex-grow ${isMobile ? 'pt-16' : isTablet ? 'pt-20' : 'pt-24'}`}>
         {children}
       </main>
       {!hideTestimonials && <TestimonialBar />}

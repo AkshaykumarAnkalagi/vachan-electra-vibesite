@@ -71,7 +71,7 @@ const Navbar = () => {
       <nav className="container mx-auto flex items-center justify-between py-4 px-4 md:px-6">
         <Link to="/" className="flex items-center z-20">
           <span className={`text-xl md:text-2xl font-sora font-bold bg-clip-text text-transparent bg-gradient-to-r from-electricLime to-neonEmerald ${
-            mobileMenuOpen && !isScrolled ? 'text-jetBlack' : ''
+            (!isScrolled && !mobileMenuOpen) ? '' : 'text-jetBlack'
           }`}>
             VACHAN MOTORS
           </span>
@@ -97,12 +97,12 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center space-x-4">
           <Button 
             variant="outline" 
-            className="border-electricLime text-jetBlack hover:bg-electricLime hover:text-jetBlack"
+            className="border-electricLime text-jetBlack hover:bg-electricLime hover:text-jetBlack rounded-full px-6"
           >
             Dealer Login
           </Button>
           <Button 
-            className="bg-gradient-to-r from-electricLime to-neonEmerald text-jetBlack hover:shadow-lg hover:shadow-electricLime/20"
+            className="bg-gradient-to-r from-electricLime to-neonEmerald text-jetBlack hover:shadow-lg hover:shadow-electricLime/20 rounded-full px-6"
           >
             Test Drive
           </Button>
@@ -110,13 +110,13 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="lg:hidden p-2 z-20" 
+          className="lg:hidden p-2 z-20 rounded-full hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-electricLime active:scale-95 transition-transform" 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
         >
           {mobileMenuOpen ? (
-            <X size={24} className={isScrolled ? 'text-jetBlack' : 'text-jetBlack'} />
+            <X size={24} className="text-jetBlack" />
           ) : (
             <Menu size={24} className={isScrolled ? 'text-jetBlack' : 'text-white'} />
           )}
@@ -129,17 +129,17 @@ const Navbar = () => {
           mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
         }`}
       >
-        <div className="container mx-auto px-6 pt-24 pb-6 h-full flex flex-col">
+        <div className="container mx-auto px-6 pt-24 pb-8 h-full flex flex-col">
           <div className="flex-grow overflow-auto">
-            <nav className="flex flex-col space-y-6">
+            <nav className="flex flex-col space-y-4">
               {navItems.map(item => (
                 <Link 
                   key={item.path} 
                   to={item.path}
-                  className={`p-2 text-xl font-sora font-medium ${
+                  className={`p-3 text-xl font-sora font-medium rounded-lg transition-colors ${
                     location.pathname === item.path 
-                      ? 'text-electricLime' 
-                      : 'text-gray-800'
+                      ? 'text-white bg-electricLime' 
+                      : 'text-gray-800 hover:bg-gray-100'
                   }`}
                 >
                   {item.name}
@@ -151,12 +151,12 @@ const Navbar = () => {
           <div className="mt-8 space-y-4">
             <Button 
               variant="outline" 
-              className="w-full border-electricLime text-jetBlack hover:bg-electricLime py-6"
+              className="w-full border-electricLime text-jetBlack hover:bg-electricLime py-6 rounded-full text-base"
             >
               Dealer Login
             </Button>
             <Button 
-              className="w-full bg-gradient-to-r from-electricLime to-neonEmerald text-jetBlack py-6"
+              className="w-full bg-gradient-to-r from-electricLime to-neonEmerald text-jetBlack py-6 rounded-full text-base"
             >
               Test Drive
             </Button>

@@ -7,44 +7,42 @@ const MOBILE_BREAKPOINT = 768
 const TABLET_BREAKPOINT = 1024
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+  const [isMobile, setIsMobile] = React.useState<boolean>(false)
 
   React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    // Check on mount
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     
-    const onChange = () => {
+    const checkIfMobile = () => {
       setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     }
     
-    mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    window.addEventListener("resize", checkIfMobile)
     
-    return () => mql.removeEventListener("change", onChange)
+    return () => window.removeEventListener("resize", checkIfMobile)
   }, [])
 
-  return !!isMobile
+  return isMobile
 }
 
 export function useIsTablet() {
-  const [isTablet, setIsTablet] = React.useState<boolean | undefined>(undefined)
+  const [isTablet, setIsTablet] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     const checkIfTablet = () => {
       const width = window.innerWidth
-      return width >= MOBILE_BREAKPOINT && width < TABLET_BREAKPOINT
+      setIsTablet(width >= MOBILE_BREAKPOINT && width < TABLET_BREAKPOINT)
     }
     
-    const onChange = () => {
-      setIsTablet(checkIfTablet())
-    }
+    // Check on mount
+    checkIfTablet()
     
-    window.addEventListener("resize", onChange)
-    setIsTablet(checkIfTablet())
+    window.addEventListener("resize", checkIfTablet)
     
-    return () => window.removeEventListener("resize", onChange)
+    return () => window.removeEventListener("resize", checkIfTablet)
   }, [])
 
-  return !!isTablet
+  return isTablet
 }
 
 export function useDeviceType() {
