@@ -5,10 +5,10 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/vachanamotors/", // Add this for GitHub Pages
+  base: "/vachanamotors/", // For GitHub Pages
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"), // Fix alias for "@/components/..."
+      "@": path.resolve(__dirname, "src"), // Alias for "@/components/..."
     },
   },
   server: {
